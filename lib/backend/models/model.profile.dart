@@ -61,6 +61,16 @@ class ProfileModel {
     );
   }
 
+  factory ProfileModel.empty() {
+    return ProfileModel(
+        id: "",
+        name: "",
+        address: "",
+        currency: Currency.JMD,
+        defaultDueDate: DueDate.Immediately,
+        sign: NegativeSign.Parenthesis);
+  }
+
   String toJson() => json.encode(toMap());
 
   factory ProfileModel.fromJson(String source) =>

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
 import 'package:slim_voice/backend/models/invoice/model.invoice.dart';
 import 'package:slim_voice/frontend/components/view.cardComponent.dart';
 
@@ -18,13 +17,9 @@ class DraftComponent extends StatelessWidget {
             children: [
               cardText("Drafts"),
               const Spacer(),
-              TextButton(
+              primaryButton(
+                "new invoice",
                 onPressed: () {},
-                style: primaryBtn,
-                child: Text(
-                  "new invoice".capitalize!,
-                  style: const TextStyle(color: Colors.white),
-                ),
               )
             ],
           ),

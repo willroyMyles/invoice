@@ -16,10 +16,9 @@ class UnpaidComponent extends StatelessWidget {
             children: [
               cardText("UnPaid"),
               const Spacer(),
-              TextButton(
+              primaryButton(
+                "new invoice",
                 onPressed: () {},
-                style: primaryBtn,
-                child: const Text("new invoice"),
               )
             ],
           ),

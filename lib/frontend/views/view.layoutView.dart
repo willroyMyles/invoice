@@ -148,7 +148,7 @@ class LayoutView extends StatelessWidget {
     }
 
     if (path == "/settings") {
-      return const SettingsView();
+      return SettingsView();
     }
 
     return Container();

@@ -13,22 +13,6 @@ Widget cardText(String str) {
   );
 }
 
-ButtonStyle get primaryBtn => ButtonStyle(
-    iconColor: mst(Colors.white),
-    backgroundColor: mst(Colors.red),
-    shape: mst(const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
-    padding: mst(const EdgeInsets.symmetric(vertical: 6, horizontal: 16)),
-    textStyle: mst(const TextStyle(fontWeight: FontWeight.w600)));
-
-ButtonStyle get secondaryBtn => OutlinedButton.styleFrom(
-    backgroundColor: Colors.blue,
-    foregroundColor: Colors.red,
-    shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.zero,
-        side: BorderSide(width: 10, color: Colors.red)),
-    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-    textStyle: const TextStyle(fontWeight: FontWeight.w600));
-
 MaterialStateProperty<T>? mst<T>(T value) {
   return MaterialStatePropertyAll<T>(value);
 }
@@ -45,7 +29,7 @@ Widget primaryButton(String text,
       side: mst(const BorderSide(color: Colors.red, width: 3)),
       shape: mst(const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
       padding: mst(EdgeInsets.symmetric(
-          vertical: 18, horizontal: largeHorizontal ? 50 : 20)),
+          vertical: 18, horizontal: largeHorizontal ? 50 : 30)),
       foregroundColor: mst(Colors.white),
       backgroundColor: mst(Colors.red),
       textStyle: mst(const TextStyle(fontWeight: FontWeight.w700)),
@@ -65,7 +49,7 @@ Widget secondaryButton(String text, Function onPressed) {
     style: OutlinedButton.styleFrom(
       side: const BorderSide(color: Colors.red, width: 3),
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 30),
       foregroundColor: Colors.red,
       textStyle: const TextStyle(fontWeight: FontWeight.w700),
     ),
@@ -85,7 +69,7 @@ Widget tertiaryButton(String text, Function onPressed) {
     style: OutlinedButton.styleFrom(
       side: BorderSide(color: col, width: 2),
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 30),
       foregroundColor: col,
       textStyle: const TextStyle(fontWeight: FontWeight.w700),
     ),
@@ -147,7 +131,24 @@ InputDecoration generalInputDecoration(String placeholder) {
 
 BoxDecoration boxInputDecoration() {
   return BoxDecoration(
-    borderRadius: BorderRadius.circular(1.5),
-    border: Border.all(color: Colors.grey.shade400, width: 1.5),
+    borderRadius: BorderRadius.circular(3),
+    border: Border.all(color: Colors.grey.shade400.withOpacity(.3), width: 1.5),
+  );
+}
+
+Widget inputHolder(Widget child) => Container(
+      margin: const EdgeInsets.only(bottom: 20, top: 5),
+      padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+      decoration: boxInputDecoration(),
+      child: child,
+    );
+
+Widget hintText(String str) {
+  return Opacity(
+    opacity: .35,
+    child: Text(
+      str,
+      style: const TextStyle(fontWeight: FontWeight.w600),
+    ),
   );
 }

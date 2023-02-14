@@ -13,10 +13,10 @@ class CreateInvoiceView extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextButton(
-                  onPressed: () {},
-                  style: primaryBtn,
-                  child: Text("Download pdf")),
+              primaryButton(
+                "Download pdf",
+                onPressed: () {},
+              ),
               secondaryButton("preview", () {}),
               secondaryButton("duplicate", () {}),
               secondaryButton("delete", () {}),
