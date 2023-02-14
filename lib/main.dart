@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:slim_voice/frontend/states/state.client.dart';
+import 'package:slim_voice/frontend/states/state.global.dart';
 import 'package:slim_voice/frontend/views/view.layoutView.dart';
 
 void main() {
+  Get.lazyPut(() => GlobalState());
+  Get.lazyPut(() => ClientState());
   runApp(const MyApp());
 }
 

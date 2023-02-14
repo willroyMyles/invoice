@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:slim_voice/backend/helpers/navigatorHelper.dart';
+import 'package:slim_voice/backend/network/executors/executor.dart';
+import 'package:slim_voice/frontend/states/state.global.dart';
 import 'package:slim_voice/frontend/views/clients.dart';
 import 'package:slim_voice/frontend/views/dashboard.dart';
 import 'package:slim_voice/frontend/views/invoice.dart';
@@ -73,9 +75,12 @@ class LayoutView extends StatelessWidget {
                               const PopupMenuDivider(
                                 height: .1,
                               ),
-                              const PopupMenuItem(
+                              PopupMenuItem(
                                 value: "/logout",
-                                child: Text("Logout"),
+                                child: const Text("Logout"),
+                                onTap: () {
+                                  exe.logOut();
+                                },
                               ),
                             ];
                           },
@@ -92,30 +97,7 @@ class LayoutView extends StatelessWidget {
                     Navigator(
                       key: navKey,
                       onGenerateRoute: (settings) {
-                        Widget child = Container();
-                        if (settings.name == "/dashboard") {
-                          child = const DashBoard();
-                        }
-
-                        if (settings.name == "/login") {
-                          child = const LoginView();
-                        }
-
-                        if (settings.name == "/register") {
-                          child = const DashBoard();
-                        }
-
-                        if (settings.name == "/invoices") {
-                          child = const InvoiceView();
-                        }
-
-                        if (settings.name == "/clients") {
-                          child = const ClientsView();
-                        }
-
-                        if (settings.name == "/settings") {
-                          child = const SettingsView();
-                        }
+                        Widget child = getChild(settings.name);
 
                         return MaterialPageRoute(
                           builder: (context) {
@@ -137,5 +119,38 @@ class LayoutView extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget getChild(String? path) {
+    if (path == null) return Container();
+    if (path == "/login") {
+      return const LoginView();
+    }
+
+    if (path == "/register") {
+      return const DashBoard();
+    }
+
+    if (!Get.find<GlobalState>().isLoggedIn.value) {
+      return const LoginView();
+    }
+
+    if (path == "/dashboard") {
+      return const DashBoard();
+    }
+
+    if (path == "/invoices") {
+      return const InvoiceView();
+    }
+
+    if (path == "/clients") {
+      return ClientsView();
+    }
+
+    if (path == "/settings") {
+      return const SettingsView();
+    }
+
+    return Container();
   }
 }

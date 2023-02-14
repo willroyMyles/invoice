@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:slim_voice/backend/helpers/navigatorHelper.dart';
 import 'package:slim_voice/backend/helpers/widgetHelper.dart';
 import 'package:slim_voice/backend/network/executors/executor.dart';
 import 'package:slim_voice/frontend/components/view.cardComponent.dart';
-import 'package:slim_voice/frontend/views/login/view.register.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
 
@@ -81,11 +79,11 @@ class _LoginViewState extends State<LoginView> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       primaryButton(
-                        "login",
+                        "register",
                         onPressed: form.valid
                             ? () async {
                                 var valid = form.markAllAsTouched();
-                                var res = await exe.signinWithEmailAndPassword(
+                                var res = await exe.signinUpEmailAndPassword(
                                     form.controls['username']!.value as String,
                                     form.controls['password']!.value as String);
                                 if (res) {
@@ -113,18 +111,7 @@ class _LoginViewState extends State<LoginView> {
                   ),
                   hintButton("forgot password?", () {}),
                   const Divider(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Opacity(
-                          opacity: .55, child: Text("dont have an account?")),
-                      TextButton(
-                          onPressed: () {
-                            Get.to(() => const RegisterView());
-                          },
-                          child: const Text("Register"))
-                    ],
-                  )
+                  const Text("a bag a chattings")
                 ],
               ),
             ),

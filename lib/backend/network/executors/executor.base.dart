@@ -1,4 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as g;
+
+import '../../../frontend/states/state.global.dart';
 
 class BaseExecutor {
   late Dio dio;
@@ -23,7 +26,7 @@ class BaseExecutor {
         "NS": "invns",
         "DB": "invdb",
         "Accept": "application/json",
-        "Authorization": "Bearer $token"
+        "Token": token
       },
     );
     dio = Dio(options);
@@ -96,6 +99,34 @@ class BaseExecutor {
     try {
       var res = await dio.delete(path);
       return Future.value(res);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  void removeToken() {
+    init();
+    g.Get.find<GlobalState>().isLoggedIn.value = false;
+  }
+
+  selectQuery(String table, {Map<String, String>? whereClause}) async {
+    try {
+      String query;
+      if (whereClause == null) {
+        query = 'select * from $table ';
+      } else {
+        var clauses = "";
+        var keys = whereClause.keys.toList();
+        var values = whereClause.values.toList();
+        for (var i = 0; i < whereClause.length; i++) {
+          clauses += '${keys[i]}="${values[i]}"';
+          if (i != 0 && i != whereClause.length) clauses += " && ";
+        }
+        query = 'select * from $table where $clauses';
+      }
+      var res = await BE.post("sql", query);
+      var id = (res!.data![0]['result'][0]['id']);
+      return id;
     } catch (e) {
       return null;
     }

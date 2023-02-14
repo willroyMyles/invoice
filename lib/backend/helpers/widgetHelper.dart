@@ -3,7 +3,7 @@ import 'package:get/utils.dart';
 
 Widget cardText(String str) {
   return Text(
-    str,
+    str.capitalize!,
     textScaleFactor: 1.5,
     maxLines: 1,
     style: const TextStyle(
@@ -33,12 +33,14 @@ MaterialStateProperty<T>? mst<T>(T value) {
   return MaterialStatePropertyAll<T>(value);
 }
 
-Widget primaryButton(String text, Function onPressed,
-    {bool largeHorizontal = false}) {
+Widget primaryButton(String text,
+    {Function? onPressed, bool largeHorizontal = false}) {
   return TextButton(
-    onPressed: () {
-      onPressed();
-    },
+    onPressed: onPressed != null
+        ? () {
+            onPressed();
+          }
+        : null,
     style: ButtonStyle(
       side: mst(const BorderSide(color: Colors.red, width: 3)),
       shape: mst(const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
@@ -124,4 +126,28 @@ InputDecoration authInputDecoration(String placeholder) {
           borderRadius: BorderRadius.circular(3),
           borderSide:
               BorderSide(color: Colors.black.withOpacity(.2), width: 1)));
+}
+
+InputDecoration generalInputDecoration(String placeholder) {
+  return InputDecoration(
+      fillColor: Colors.white.withOpacity(.4),
+      filled: true,
+      floatingLabelAlignment: FloatingLabelAlignment.center,
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      contentPadding: const EdgeInsets.all(5),
+      isDense: true,
+      isCollapsed: true,
+      label: Opacity(
+          opacity: .5,
+          child: Text(
+            placeholder,
+          )),
+      border: InputBorder.none);
+}
+
+BoxDecoration boxInputDecoration() {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(1.5),
+    border: Border.all(color: Colors.grey.shade400, width: 1.5),
+  );
 }
