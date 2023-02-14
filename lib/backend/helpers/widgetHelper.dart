@@ -17,6 +17,10 @@ MaterialStateProperty<T>? mst<T>(T value) {
   return MaterialStatePropertyAll<T>(value);
 }
 
+double largeWidth = GetPlatform.isMobile ? 30 : 50;
+double width = GetPlatform.isMobile ? 10 : 30;
+double height = GetPlatform.isMobile ? 6 : 18;
+
 Widget primaryButton(String text,
     {Function? onPressed, bool largeHorizontal = false}) {
   return TextButton(
@@ -29,7 +33,7 @@ Widget primaryButton(String text,
       side: mst(const BorderSide(color: Colors.red, width: 3)),
       shape: mst(const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
       padding: mst(EdgeInsets.symmetric(
-          vertical: 18, horizontal: largeHorizontal ? 50 : 30)),
+          vertical: height, horizontal: largeHorizontal ? largeWidth : width)),
       foregroundColor: mst(Colors.white),
       backgroundColor: mst(Colors.red),
       textStyle: mst(const TextStyle(fontWeight: FontWeight.w700)),
@@ -49,7 +53,7 @@ Widget secondaryButton(String text, Function onPressed) {
     style: OutlinedButton.styleFrom(
       side: const BorderSide(color: Colors.red, width: 3),
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 30),
+      padding: EdgeInsets.symmetric(vertical: height, horizontal: width),
       foregroundColor: Colors.red,
       textStyle: const TextStyle(fontWeight: FontWeight.w700),
     ),
@@ -69,7 +73,7 @@ Widget tertiaryButton(String text, Function onPressed) {
     style: OutlinedButton.styleFrom(
       side: BorderSide(color: col, width: 2),
       shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
-      padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 30),
+      padding: EdgeInsets.symmetric(vertical: height, horizontal: width),
       foregroundColor: col,
       textStyle: const TextStyle(fontWeight: FontWeight.w700),
     ),
@@ -89,7 +93,7 @@ Widget hintButton(String text, Function onPressed) {
     style: ButtonStyle(
       // side: mst(const BorderSide(color: Colors.red, width: 3)),
       shape: mst(const RoundedRectangleBorder(borderRadius: BorderRadius.zero)),
-      padding: mst(const EdgeInsets.symmetric(vertical: 18, horizontal: 20)),
+      padding: mst(EdgeInsets.symmetric(vertical: height, horizontal: width)),
       foregroundColor: mst(Colors.grey.shade700),
       backgroundColor: mst(Colors.transparent),
       textStyle: mst(const TextStyle(
@@ -152,3 +156,8 @@ Widget hintText(String str) {
     ),
   );
 }
+
+Widget get divider => const Opacity(
+      opacity: .75,
+      child: Divider(),
+    );

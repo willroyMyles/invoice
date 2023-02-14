@@ -45,6 +45,11 @@ class SentModel {
     );
   }
 
+  factory SentModel.empty() {
+    return SentModel(
+        sentDate: DateTime.now(), isDraft: true, sentRecipients: []);
+  }
+
   String toJson() => json.encode(toMap());
 
   factory SentModel.fromJson(String source) =>

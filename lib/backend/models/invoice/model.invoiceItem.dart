@@ -44,6 +44,14 @@ class InvoiceItemModel {
       total: map['total'] as double,
     );
   }
+  factory InvoiceItemModel.empty() {
+    return InvoiceItemModel(
+      description: 'description',
+      quantity: 1,
+      price: 0,
+      total: 0,
+    );
+  }
 
   String toJson() => json.encode(toMap());
 

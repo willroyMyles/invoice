@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:slim_voice/backend/helpers/navigatorHelper.dart';
 import 'package:slim_voice/backend/models/invoice/model.invoice.dart';
 import 'package:slim_voice/frontend/components/view.cardComponent.dart';
 
@@ -19,7 +20,10 @@ class DraftComponent extends StatelessWidget {
               const Spacer(),
               primaryButton(
                 "new invoice",
-                onPressed: () {},
+                onPressed: () {
+                  // Get.to(() => const CreateInvoiceView());
+                  pushNamed("/createInvoice");
+                },
               )
             ],
           ),

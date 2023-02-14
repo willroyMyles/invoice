@@ -6,7 +6,7 @@ import 'package:slim_voice/frontend/states/state.settings.dart';
 
 class SettingsView extends StatelessWidget {
   SettingsView({super.key});
-  final controller = Get.put(SettingsState());
+  final controller = Get.find<SettingsState>();
 
   @override
   Widget build(BuildContext context) {

@@ -124,6 +124,23 @@ class InvoiceModel {
   factory InvoiceModel.fromJson(String source) =>
       InvoiceModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
+  factory InvoiceModel.empty() {
+    return InvoiceModel(
+        id: "",
+        clientId: "",
+        clientName: "",
+        invoiceNumber: 0,
+        dateIssued: DateTime.now(),
+        dateCreated: DateTime.now(),
+        dateDue: DateTime.now(),
+        invoiceItems: [InvoiceItemModel.empty()],
+        currency: Currency.JMD,
+        sentModel: SentModel.empty(),
+        payments: [],
+        total: 0,
+        isDraft: true);
+  }
+
   @override
   String toString() {
     return 'InvoiceModel(id: $id, clientId: $clientId, clientName: $clientName, invoiceNumber: $invoiceNumber, dateIssued: $dateIssued, dateCreated: $dateCreated, dateDue: $dateDue, invoiceItems: $invoiceItems, currency: $currency, sentModel: $sentModel, payments: $payments, total: $total, isDraft: $isDraft)';
