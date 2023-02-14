@@ -12,6 +12,7 @@ class ProfileModel {
   Currency currency;
   DueDate defaultDueDate;
   NegativeSign sign;
+  String get getId => id.replaceAll("profile:", '');
   ProfileModel({
     required this.id,
     required this.name,

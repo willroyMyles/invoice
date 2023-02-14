@@ -29,6 +29,7 @@ class SettingsState extends GetxController {
   updateProfile() async {
     model.name = name.text;
     model.address = address.text;
+    // model.sign =
     var res = await exe.profile_saveProfile(model);
     if (res) {
       //success

@@ -69,6 +69,11 @@ class ProfileComponent extends GetView<SettingsState> {
                               const SizedBox(height: 5),
                               DropdownMenu(
                                 controller: controller.currency,
+                                onSelected: (value) {
+                                  if (value != null) {
+                                    controller.onCurrencyChanged(value);
+                                  }
+                                },
                                 dropdownMenuEntries: Currency.values.map((e) {
                                   return DropdownMenuEntry(
                                     value: e,
@@ -84,6 +89,11 @@ class ProfileComponent extends GetView<SettingsState> {
                               hintText("Due Date"),
                               const SizedBox(height: 5),
                               DropdownMenu(
+                                onSelected: (value) {
+                                  if (value != null) {
+                                    controller.onDueDateChanged(value);
+                                  }
+                                },
                                 controller: controller.dueDate,
                                 dropdownMenuEntries: DueDate.values.map((e) {
                                   return DropdownMenuEntry(
@@ -100,6 +110,11 @@ class ProfileComponent extends GetView<SettingsState> {
                               hintText("Negative Numbers"),
                               const SizedBox(height: 5),
                               DropdownMenu(
+                                onSelected: (value) {
+                                  if (value != null) {
+                                    controller.onNegativeSignChanged(value);
+                                  }
+                                },
                                 controller: controller.negativeNumber,
                                 dropdownMenuEntries:
                                     NegativeSign.values.map((e) {

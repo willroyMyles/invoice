@@ -31,7 +31,7 @@ mixin ProfileExecutor {
 
   Future<bool> profile_updateProfile(ProfileModel model) async {
     try {
-      var res = await BE.put("$_path/${model.id}", model.toMap());
+      var res = await BE.put("$_path/${model.getId}", model.toMap());
       if (res != null) return true;
       return false;
     } catch (e) {
