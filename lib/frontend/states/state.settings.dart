@@ -40,7 +40,7 @@ class SettingsState extends GetxController {
     refresh();
   }
 
-  getProfile() async {
+  Future<ProfileModel> getProfile() async {
     var m = await exe.profile_getProfile();
     if (m != null) {
       model = m;
@@ -51,5 +51,6 @@ class SettingsState extends GetxController {
       negativeNumber.text = m.sign.name;
     }
     refresh();
+    return Future.value(m);
   }
 }

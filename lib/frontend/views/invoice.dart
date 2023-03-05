@@ -12,12 +12,12 @@ class InvoiceView extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         // color: Colors.yellow,
-        child: Column(
-          children: const [
+        child: const Column(
+          children: [
             SizedBox(
               height: 30,
             ),
-            DraftComponent(invoices: []),
+            DraftComponent(),
             SizedBox(
               height: 30,
             ),

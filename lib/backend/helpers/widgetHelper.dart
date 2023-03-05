@@ -116,7 +116,8 @@ InputDecoration authInputDecoration(String placeholder) {
               BorderSide(color: Colors.black.withOpacity(.2), width: 1)));
 }
 
-InputDecoration generalInputDecoration(String placeholder) {
+InputDecoration generalInputDecoration(String placeholder,
+    {bool leftAlign = true}) {
   return InputDecoration(
       fillColor: Colors.white.withOpacity(.4),
       filled: true,
@@ -125,11 +126,21 @@ InputDecoration generalInputDecoration(String placeholder) {
       contentPadding: const EdgeInsets.all(5),
       isDense: true,
       isCollapsed: true,
-      label: Opacity(
-          opacity: .5,
-          child: Text(
-            placeholder,
-          )),
+      label: Row(
+        mainAxisAlignment:
+            leftAlign ? MainAxisAlignment.start : MainAxisAlignment.end,
+        children: [
+          Opacity(
+              opacity: .5,
+              child: Container(
+                // color: Colors.red,
+                child: Text(
+                  placeholder,
+                  textAlign: TextAlign.end,
+                ),
+              )),
+        ],
+      ),
       border: InputBorder.none);
 }
 
@@ -149,10 +160,20 @@ Widget inputHolder(Widget child) => Container(
 
 Widget hintText(String str) {
   return Opacity(
-    opacity: .35,
+    opacity: .45,
     child: Text(
-      str,
-      style: const TextStyle(fontWeight: FontWeight.w600),
+      str.capitalize!,
+      style: const TextStyle(fontWeight: FontWeight.w500),
+    ),
+  );
+}
+
+Widget hintText1(String str) {
+  return Opacity(
+    opacity: .75,
+    child: Text(
+      str.capitalize!,
+      style: const TextStyle(fontWeight: FontWeight.w500),
     ),
   );
 }

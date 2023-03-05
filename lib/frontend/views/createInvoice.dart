@@ -1,8 +1,13 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:flutter_spinbox/material.dart';
 import 'package:get/get.dart';
+import 'package:slim_voice/backend/helpers/dateHelper.dart';
 import 'package:slim_voice/backend/helpers/widgetHelper.dart';
 import 'package:slim_voice/frontend/components/view.cardComponent.dart';
+import 'package:slim_voice/frontend/components/view.paymentComponent.dart';
+import 'package:slim_voice/frontend/components/view.sentComponent.dart';
 import 'package:slim_voice/frontend/states/state.invoice.dart';
 
 import '../../backend/enum/enum.currency.dart';
@@ -62,8 +67,28 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
-                                          inputHolder(const TextField()),
-                                          inputHolder(const TextField()),
+                                          inputHolder(TextField(
+                                            onSubmitted: (value) {
+                                              print(value);
+                                              controller
+                                                  .updateDescription(value);
+                                            },
+                                            onChanged: (value) {
+                                              controller
+                                                  .updateDescription(value);
+                                            },
+                                            decoration: generalInputDecoration(
+                                                "Project / Description"),
+                                          )),
+                                          inputHolder(TextField(
+                                            // focusNode: controller.description,
+                                            controller: controller
+                                                .profileControllerText,
+                                            maxLines: null,
+                                            minLines: null,
+                                            decoration: generalInputDecoration(
+                                                "Address"),
+                                          )),
                                         ],
                                       ),
                                     ),
@@ -86,9 +111,19 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                                               hintText("issued : "),
                                               Container(
                                                   child: TextButton(
-                                                child: Text(controller
-                                                    .model.dateIssued
-                                                    .toString()),
+                                                child: Row(
+                                                  children: [
+                                                    Text(formatForDisplayDate(
+                                                        controller
+                                                            .model.dateIssued)),
+                                                    const SizedBox(width: 10),
+                                                    const Icon(
+                                                      Icons
+                                                          .calendar_today_rounded,
+                                                      size: 16,
+                                                    )
+                                                  ],
+                                                ),
                                                 onPressed: () async {
                                                   var res =
                                                       await showCalendarDatePicker2Dialog(
@@ -115,9 +150,21 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                                               hintText("due : "),
                                               Container(
                                                   child: TextButton(
-                                                child: Text(controller
-                                                    .model.dateDue
-                                                    .toString()),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.min,
+                                                  children: [
+                                                    Text(formatForDisplayDate(
+                                                        controller
+                                                            .model.dateDue)),
+                                                    const SizedBox(width: 10),
+                                                    const Icon(
+                                                      Icons
+                                                          .calendar_today_rounded,
+                                                      size: 16,
+                                                    )
+                                                  ],
+                                                ),
                                                 onPressed: () async {
                                                   var res =
                                                       await showCalendarDatePicker2Dialog(
@@ -143,10 +190,10 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                                 ],
                               ),
                             ),
-                            Opacity(
+                            const Opacity(
                               opacity: .8,
                               child: Row(
-                                children: const [
+                                children: [
                                   Expanded(
                                       flex: 3,
                                       child: Text("",
@@ -168,6 +215,8 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                               ),
                             ),
                             ...controller.model.invoiceItems.map((e) {
+                              var index =
+                                  controller.model.invoiceItems.indexOf(e);
                               return Column(
                                 children: [
                                   divider,
@@ -175,17 +224,56 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                                     children: [
                                       Expanded(
                                           flex: 3,
-                                          child: Text(e.description.capitalize!,
-                                              textAlign: TextAlign.left)),
+                                          child: TextField(
+                                            decoration: generalInputDecoration(
+                                                "Description"),
+                                            // expands: true,
+                                            minLines: null,
+                                            maxLines: null,
+                                          )),
                                       Expanded(
-                                          child: Text(e.quantity.toString(),
-                                              textAlign: TextAlign.right)),
+                                          child: Container(
+                                        alignment: Alignment.centerRight,
+                                        child: SpinBox(
+                                          iconSize: 15,
+                                          decoration: const InputDecoration(
+                                            border: InputBorder.none,
+                                          ),
+                                          min: 1,
+                                          value: 1,
+                                          onChanged: (value) {
+                                            controller.updateQuantity(
+                                                index: index, value: value);
+                                          },
+                                        ),
+                                      )),
                                       Expanded(
-                                          child: Text(e.price.toString(),
-                                              textAlign: TextAlign.right)),
+                                          child: TextField(
+                                        textAlign: TextAlign.end,
+                                        decoration: generalInputDecoration(
+                                            "0.00",
+                                            leftAlign: false),
+                                        onChanged: (value) {
+                                          controller.model.invoiceItems[index]
+                                              .price = double.parse(value);
+                                        },
+                                        inputFormatters: [
+                                          CurrencyInputFormatter()
+                                        ],
+                                      )),
                                       Expanded(
-                                          child: Text(e.total.toString(),
-                                              textAlign: TextAlign.right)),
+                                          child: IgnorePointer(
+                                        child: TextField(
+                                          textAlign: TextAlign.end,
+                                          decoration: generalInputDecoration(
+                                              "0.00",
+                                              leftAlign: false),
+                                          onChanged: (value) {},
+                                          inputFormatters: [
+                                            CurrencyInputFormatter()
+                                          ],
+                                        ),
+                                      )),
                                     ],
                                   ),
                                 ],
@@ -195,55 +283,95 @@ class CreateInvoiceView extends GetView<InvoiceState> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Opacity(
-                                  opacity: .65,
-                                  child: IconButton(
-                                      onPressed: () {},
-                                      icon:
-                                          const Icon(Icons.add_circle_outline)),
-                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      controller.onAddedItem();
+                                    },
+                                    icon: Icon(
+                                      Icons.add_circle_outline,
+                                      color: Colors.grey.shade400,
+                                      weight: 0.1,
+                                      fill: .1,
+                                      grade: .1,
+                                    )),
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Text(
-                                        "subtotal ${controller.model.total.toString()}"),
-                                    Text(
-                                        "total ${controller.model.total.toString()}"),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const Opacity(
+                                            opacity: .6,
+                                            child: Text("Subtotal ")),
+                                        Text(
+                                            " ${toCurrencyString(controller.model.subTotal.toString())}"),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const Opacity(
+                                            opacity: .6, child: Text("tax ")),
+                                        Text(
+                                            " ${controller.model.tax.toCurrencyString()}"),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        const Opacity(
+                                            opacity: .6, child: Text("total ")),
+                                        Text(
+                                            " ${toCurrencyString(controller.model.total.toString())}"),
+                                      ],
+                                    ),
                                   ],
                                 )
                               ],
                             ),
-                            hintText("notes..."),
-                            inputHolder(const TextField()),
+                            hintText1("notes..."),
+                            Container(child: const TextField()),
+                            const SizedBox(height: 25),
                             Row(
                               children: [
                                 hintText("currency"),
+                                const SizedBox(width: 5),
                                 Container(
-                                  width: 50,
+                                  width: 80,
                                   clipBehavior: Clip.antiAlias,
                                   decoration: const BoxDecoration(),
-                                  child: PopupMenuButton(
-                                    // controller: controller.currency,
-                                    onSelected: (value) {},
-                                    itemBuilder: (context) {
-                                      return Currency.values.map((e) {
-                                        return PopupMenuItem(
-                                          value: e,
-                                          child: Text(e.name),
-                                        );
-                                      }).toList();
+                                  child: DropdownButton(
+                                    items: Currency.values.map((e) {
+                                      return DropdownMenuItem(
+                                          value: e, child: Text(e.name));
+                                    }).toList(),
+                                    onChanged: (value) {
+                                      print(value);
+                                      // controller.model.currency = value!;
+                                      controller.updateCurrency(value!);
                                     },
+                                    value: controller.model.currency,
+                                    // controller: controller.currency,
                                   ),
                                 ),
                                 const Spacer(),
                                 tertiaryButton("cancel", () {}),
                                 const SizedBox(width: 10),
-                                primaryButton("save changes")
+                                primaryButton("save changes", onPressed: () {
+                                  controller.onSaveChanges();
+                                })
                               ],
                             )
                           ],
                         ),
-                      ))
+                      )),
+                      const SizedBox(height: 15),
+                      Wrap(
+                        children: [
+                          SentComponent(model: controller.model.sentModel),
+                          PaymentComponent(model: controller.model.payments)
+                        ],
+                      )
                     ],
                   ),
                 ),

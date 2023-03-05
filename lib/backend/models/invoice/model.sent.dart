@@ -38,7 +38,7 @@ class SentModel {
       sentDate: DateTime.fromMillisecondsSinceEpoch(map['sentDate'] as int),
       isDraft: map['isDraft'] as bool,
       sentRecipients: List<SentRecipient>.from(
-        (map['sentRecepients'] as List<int>).map<SentRecipient>(
+        (map['sentRecepients']).map<SentRecipient>(
           (x) => SentRecipient.fromMap(x as Map<String, dynamic>),
         ),
       ),

@@ -6,10 +6,10 @@ mixin InvoiceExecutor {
   Future<List<InvoiceModel>> getInvoices() async {
     try {
       var res = await BE.getAll(_path);
-      if (res != null && res.data != null) {
+      if (res != null && res.data.first['result'] != null) {
         List<InvoiceModel> list = [];
-        for (var e in res.data) {
-          var model = InvoiceModel.fromMap(res.data);
+        for (var e in res.data.first['result']) {
+          var model = InvoiceModel.fromMap(e);
           list.add(model);
         }
         return list;
@@ -18,6 +18,17 @@ mixin InvoiceExecutor {
       return [];
     } catch (e) {
       return [];
+    }
+  }
+
+  Future invoice_saveInvoice(InvoiceModel model) async {
+    try {
+      var map = model.toMap();
+      var res = await BE.post(_path, map);
+      print(res);
+    } catch (e) {
+      print("could not save post");
+      //could not save post
     }
   }
 }

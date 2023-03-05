@@ -4,8 +4,8 @@ import 'dart:convert';
 class InvoiceItemModel {
   String description;
   int quantity;
-  double price;
-  double total;
+  num price;
+  num total;
   InvoiceItemModel({
     required this.description,
     required this.quantity,
@@ -16,8 +16,8 @@ class InvoiceItemModel {
   InvoiceItemModel copyWith({
     String? description,
     int? quantity,
-    double? price,
-    double? total,
+    num? price,
+    num? total,
   }) {
     return InvoiceItemModel(
       description: description ?? this.description,
@@ -40,8 +40,8 @@ class InvoiceItemModel {
     return InvoiceItemModel(
       description: map['description'] as String,
       quantity: map['quantity'] as int,
-      price: map['price'] as double,
-      total: map['total'] as double,
+      price: double.parse(map['price']),
+      total: double.parse(map['total']),
     );
   }
   factory InvoiceItemModel.empty() {
