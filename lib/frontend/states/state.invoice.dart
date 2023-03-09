@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pdf/widgets.dart' as w;
 import 'package:slim_voice/backend/enum/enum.currency.dart';
+import 'package:slim_voice/backend/models/client/model.client.dart';
 import 'package:slim_voice/backend/models/invoice/model.invoice.dart';
 import 'package:slim_voice/backend/models/invoice/model.invoiceItem.dart';
 import 'package:slim_voice/backend/network/executors/executor.dart';
@@ -70,5 +71,10 @@ class InvoiceState extends GetxController {
 
   onSaveChanges() async {
     await exe.invoice_saveInvoice(model);
+  }
+
+  void setClient(ClientModel client) {
+    model.clientId = client.id;
+    model.clientName = client.name;
   }
 }

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
-import 'package:slim_voice/backend/helpers/navigatorHelper.dart';
 import 'package:slim_voice/backend/helpers/widgetHelper.dart';
 import 'package:slim_voice/backend/network/executors/executor.dart';
 import 'package:slim_voice/frontend/components/view.cardComponent.dart';
+import 'package:slim_voice/frontend/views/dashboard.dart';
 import 'package:slim_voice/frontend/views/login/view.register.dart';
 
 class LoginView extends StatefulWidget {
@@ -89,7 +89,8 @@ class _LoginViewState extends State<LoginView> {
                                     form.controls['username']!.value as String,
                                     form.controls['password']!.value as String);
                                 if (res) {
-                                  replaceNamed("/dashboard");
+                                  // replaceNamed("/dashboard");
+                                  Get.to(const DashBoard());
                                 }
                               }
                             : null,

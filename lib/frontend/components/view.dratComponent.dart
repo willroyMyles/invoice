@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:slim_voice/backend/helpers/navigatorHelper.dart';
 import 'package:slim_voice/backend/network/executors/executor.dart';
 import 'package:slim_voice/frontend/components/view.cardComponent.dart';
 import 'package:slim_voice/frontend/states/state.invoice.dart';
+import 'package:slim_voice/frontend/views/client/clients.dart';
 
 import '../../backend/helpers/widgetHelper.dart';
 
@@ -26,10 +26,33 @@ class DraftComponent extends GetView<InvoiceState> {
                       "new invoice",
                       onPressed: () {
                         // Get.to(() => const CreateInvoiceView());
-                        pushNamed("/createInvoice");
+
+                        // pushNamed("/createInvoice");
+                        // pushNamed("/clients", {"selecting": true});
+                        Get.to(() => ClientsView(),
+                            arguments: {"selecting": true});
                       },
                     )
                   ],
+                ),
+                const Divider(),
+                const SizedBox(height: 10),
+                Opacity(
+                  opacity: .5,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                          width: 30,
+                          alignment: Alignment.center,
+                          child: const Text("No.", textAlign: TextAlign.left)),
+                      const SizedBox(width: 10),
+                      const Expanded(
+                          child: Text("Client", textAlign: TextAlign.left)),
+                      const Expanded(
+                          child: Text("Total", textAlign: TextAlign.right)),
+                    ],
+                  ),
                 ),
                 const Divider(),
                 if (controller.models.isEmpty)
@@ -54,9 +77,17 @@ class DraftComponent extends GetView<InvoiceState> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(e.invoiceNumber.toString()),
-                        Text(e.clientName),
-                        Text(e.total.toString()),
+                        Container(
+                            width: 30,
+                            alignment: Alignment.center,
+                            child: Text(e.invoiceNumber.toString())),
+                        const SizedBox(width: 10),
+                        Expanded(child: Text(e.clientName)),
+                        Expanded(
+                            child: Text(
+                          e.total.toString(),
+                          textAlign: TextAlign.right,
+                        )),
                       ],
                     ),
                   );

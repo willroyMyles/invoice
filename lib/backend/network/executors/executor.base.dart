@@ -1,25 +1,32 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart' as g;
+import 'package:surrealdb/surrealdb.dart';
 
 import '../../../frontend/states/state.global.dart';
 
 class BaseExecutor {
   late Dio dio;
+  late SurrealDB client;
 
   BaseExecutor() {
     init();
   }
 
-  init() {
+  init() async {
     BaseOptions options = BaseOptions(
       baseUrl: "http://127.0.0.1:8000/",
       headers: {"NS": "invns", "DB": "invdb", "Accept": "application/json"},
     );
 
+    client = SurrealDB("ws://localhost:8000/rpc");
+    client.connect();
+    await client.wait();
+    client.use("invns", "invdb");
+
     dio = Dio(options);
   }
 
-  addBearerToken(String token) {
+  addBearerToken(String token) async {
     BaseOptions options = BaseOptions(
       baseUrl: "http://127.0.0.1:8000/",
       headers: {
@@ -29,6 +36,11 @@ class BaseExecutor {
         "Token": token
       },
     );
+    print(token);
+    client = SurrealDB("ws://localhost:8000/rpc/", token: token);
+    client.connect();
+    await client.wait();
+    client.use("invns", "invdb");
     dio = Dio(options);
   }
 

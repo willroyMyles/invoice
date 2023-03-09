@@ -1,13 +1,13 @@
-import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-final _navKey = GlobalKey<NavigatorState>();
-
-GlobalKey get navKey => _navKey;
-
-pushNamed(String path) {
-  _navKey.currentState!.pushNamed(path);
+pushNamed(String path, [Object? arg]) {
+  // Get.nestedKey("0")!.currentState!.pushNamed(path, arguments: arg);
+  Get.toNamed(path, arguments: arg);
 }
 
-replaceNamed(String path) {
-  _navKey.currentState!.pushReplacementNamed(path);
+replaceNamed(String path, [Object? arg]) {
+  // Get.nestedKey("0")!.currentState!.pushReplacementNamed(path, arguments: arg);
+  Get.offAndToNamed(path, arguments: arg);
 }
+
+// getArguments() =>  

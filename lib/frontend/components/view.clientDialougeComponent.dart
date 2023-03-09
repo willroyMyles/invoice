@@ -57,7 +57,8 @@ class _ClientDialougeComponentState extends State<ClientDialougeComponent> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               tertiaryButton("cancel", () {
-                Get.back();
+                Get.close(1);
+                // Get.back();
               }),
               primaryButton("Create", onPressed: () {
                 Get.back(result: [name.text, address.text]);

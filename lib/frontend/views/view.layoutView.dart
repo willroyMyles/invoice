@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_framework/responsive_framework.dart';
-import 'package:slim_voice/backend/helpers/navigatorHelper.dart';
 import 'package:slim_voice/backend/network/executors/executor.dart';
 import 'package:slim_voice/frontend/states/state.global.dart';
-import 'package:slim_voice/frontend/views/clients.dart';
-import 'package:slim_voice/frontend/views/createInvoice.dart';
+import 'package:slim_voice/frontend/views/client/clients.dart';
 import 'package:slim_voice/frontend/views/dashboard.dart';
 import 'package:slim_voice/frontend/views/invoice.dart';
 import 'package:slim_voice/frontend/views/login/view.login.dart';
@@ -48,33 +46,48 @@ class LayoutView extends StatelessWidget {
                               ),
                               padding: EdgeInsets.zero,
                               elevation: 1,
-                              onSelected: (value) {
-                                replaceNamed(value);
-                              },
+                              // onSelected: (value) {
+                              //   replaceNamed(value);
+                              // },
                               itemBuilder: (context) {
                                 return [
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: "/",
-                                    child: Text("DashBoard"),
+                                    child: const Text("DashBoard"),
+                                    onTap: () {
+                                      Get.to(() => const DashBoard());
+                                    },
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: "/invoices",
-                                    child: Text("Invoices"),
+                                    child: const Text("Invoices"),
+                                    onTap: () {
+                                      Get.to(() => const InvoiceView());
+                                    },
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: "/clients",
-                                    child: Text("Clients"),
+                                    child: const Text("Clients"),
+                                    onTap: () {
+                                      Get.to(() => ClientsView());
+                                    },
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: "/settings",
-                                    child: Text("Settings"),
+                                    child: const Text("Settings"),
+                                    onTap: () {
+                                      Get.to(() => SettingsView());
+                                    },
                                   ),
                                   const PopupMenuDivider(
                                     height: .1,
                                   ),
-                                  const PopupMenuItem(
+                                  PopupMenuItem(
                                     value: "/help",
-                                    child: Text("Help"),
+                                    child: const Text("Help"),
+                                    onTap: () {
+                                      // Get.to(() => const ());
+                                    },
                                   ),
                                   const PopupMenuDivider(
                                     height: .1,
@@ -98,22 +111,26 @@ class LayoutView extends StatelessWidget {
                 Expanded(
                   child: Container(
                     child: ResponsiveWrapper.builder(
-                        Navigator(
-                          key: navKey,
-                          onGenerateRoute: (settings) {
-                            Widget child = getChild(settings.name);
-
-                            return MaterialPageRoute(
-                              builder: (context) {
-                                return Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 10),
-                                    child: child);
-                              },
-                            );
-                          },
-                          initialRoute: "/login",
+                        const GetMaterialApp(
+                          home: LoginView(),
                         ),
+                        // Navigator(
+                        //   key: Get.nestedKey("0"),
+                        //   onGenerateRoute: (settings) {
+                        //     Widget child =
+                        //         getChild(settings.name, settings.arguments);
+
+                        //     return MaterialPageRoute(
+                        //       builder: (context) {
+                        //         return Container(
+                        //             padding: const EdgeInsets.symmetric(
+                        //                 horizontal: 10),
+                        //             child: child);
+                        //       },
+                        //     );
+                        //   },
+                        //   initialRoute: "/login",
+                        // ),
                         backgroundColor: Colors.green,
                         maxWidth: 800,
                         alignment: Alignment.center),
@@ -127,7 +144,7 @@ class LayoutView extends StatelessWidget {
     );
   }
 
-  Widget getChild(String? path) {
+  Widget getChild(String? path, [Object? arg]) {
     if (path == null) return Container();
     if (path == "/login") {
       return const LoginView();
@@ -157,9 +174,9 @@ class LayoutView extends StatelessWidget {
       return SettingsView();
     }
 
-    if (path == "/createInvoice") {
-      return const CreateInvoiceView();
-    }
+    // if (path == "/createInvoice") {
+    //   return const CreateInvoiceView();
+    // }
 
     return Container();
   }

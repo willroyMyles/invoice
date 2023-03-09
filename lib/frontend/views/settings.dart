@@ -10,14 +10,16 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(children: const [
-        ProfileComponent(model: null),
-        SizedBox(
-          height: 30,
-        ),
-        AccountComponent(),
-      ]),
+    return Material(
+      child: Container(
+        child: const Column(children: [
+          ProfileComponent(model: null),
+          SizedBox(
+            height: 30,
+          ),
+          AccountComponent(),
+        ]),
+      ),
     );
   }
 }

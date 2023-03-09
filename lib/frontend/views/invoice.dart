@@ -8,25 +8,27 @@ class InvoiceView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        alignment: Alignment.center,
-        // color: Colors.yellow,
-        child: const Column(
-          children: [
-            SizedBox(
-              height: 30,
-            ),
-            DraftComponent(),
-            SizedBox(
-              height: 30,
-            ),
-            InvoicesComponent(invoices: []),
-            SizedBox(
-              height: 30,
-            ),
-            Text("invoices"),
-          ],
+    return Material(
+      child: Center(
+        child: Container(
+          alignment: Alignment.center,
+          // color: Colors.yellow,
+          child: const Column(
+            children: [
+              SizedBox(
+                height: 30,
+              ),
+              DraftComponent(),
+              SizedBox(
+                height: 30,
+              ),
+              InvoicesComponent(invoices: []),
+              SizedBox(
+                height: 30,
+              ),
+              Text("invoices"),
+            ],
+          ),
         ),
       ),
     );

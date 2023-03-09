@@ -40,8 +40,8 @@ class InvoiceItemModel {
     return InvoiceItemModel(
       description: map['description'] as String,
       quantity: map['quantity'] as int,
-      price: double.parse(map['price']),
-      total: double.parse(map['total']),
+      price: map['price'],
+      total: map['total'],
     );
   }
   factory InvoiceItemModel.empty() {

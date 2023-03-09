@@ -2,13 +2,14 @@
 import 'dart:convert';
 
 import 'package:flutter/foundation.dart';
+import 'package:slim_voice/backend/models/client/model.contacts.dart';
 
 class ClientModel {
   String id;
   String userId;
   String name;
   String address;
-  List<String> contacts;
+  List<Contacts> contacts;
   ClientModel({
     required this.id,
     required this.userId,
@@ -22,7 +23,7 @@ class ClientModel {
     String? userId,
     String? name,
     String? address,
-    List<String>? contacts,
+    List<Contacts>? contacts,
   }) {
     return ClientModel(
       id: id ?? this.id,
@@ -33,23 +34,28 @@ class ClientModel {
     );
   }
 
+  String get getId => id.split(":").last;
+
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': id,
       'userId': userId,
       'name': name,
       'address': address,
-      'contacts': contacts,
+      'contacts': contacts.map((x) => x.toMap()).toList(),
     };
   }
 
   factory ClientModel.fromMap(Map<String, dynamic> map) {
     return ClientModel(
-      id: map['id'] as String,
-      userId: map['userId'] as String,
-      name: map['name'] as String,
-      address: map['address'] as String,
-      contacts: List.from((map['contacts'])),
+      id: (map['id'] ?? '') as String,
+      userId: (map['userId'] ?? '') as String,
+      name: (map['name'] ?? '') as String,
+      address: (map['address'] ?? '') as String,
+      contacts: List<Contacts>.from(
+        (map['contacts']).map<Contacts>(
+          (x) => Contacts.fromMap(x),
+        ),
+      ),
     );
   }
 
@@ -61,6 +67,13 @@ class ClientModel {
   @override
   String toString() {
     return 'ClientModel(id: $id, userId: $userId, name: $name, address: $address, contacts: $contacts)';
+  }
+
+  String getInfo() {
+    return '''
+$name
+$address
+ ''';
   }
 
   @override
